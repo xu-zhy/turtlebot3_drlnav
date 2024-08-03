@@ -213,6 +213,7 @@ class DRLGazebo(Node):
         while not self.reset_simulation_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('reset service not available, waiting again...')
         self.reset_simulation_client.call_async(req)
+        time.sleep(0.6)
 
     def delete_entity(self):
         req = DeleteEntity.Request()
@@ -220,6 +221,7 @@ class DRLGazebo(Node):
         while not self.delete_entity_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('service not available, waiting again...')
         self.delete_entity_client.call_async(req)
+        time.sleep(0.6)
 
     def spawn_entity(self):
         goal_pose = Pose()
@@ -232,6 +234,7 @@ class DRLGazebo(Node):
         while not self.spawn_entity_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('service not available, waiting again...')
         self.spawn_entity_client.call_async(req)
+        time.sleep(0.6)
 
     def get_obstacle_coordinates(self):
         tree = ET.parse(os.getenv('DRLNAV_BASE_PATH') + '/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_drl_world/inner_walls/model.sdf')

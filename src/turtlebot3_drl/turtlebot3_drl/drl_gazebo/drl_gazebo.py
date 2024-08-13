@@ -57,6 +57,8 @@ class DRLGazebo(Node):
 
         self.prev_x, self.prev_y = -1, -1
         self.goal_x, self.goal_y = 0.5, 0.0
+        if self.stage == 11:
+            self.goal_x, self.goal_y = -2.5, 9.5
 
         """************************************************************
         ** Initialise ROS publishers, subscribers and clients
@@ -179,7 +181,8 @@ class DRLGazebo(Node):
         while ((abs(self.prev_x - self.goal_x) + abs(self.prev_y - self.goal_y)) < 2):
             if self.stage == 11:
                 # --- Define static goal positions here ---
-                goal_pose_list = [[0.0, 0.0], [0.0, 6.5], [5.0, 5.5], [-2.5, -6.0], [3.0, -4.0], [6.0, -1.0]]
+                # goal_pose_list = [[0.0, 0.0], [0.0, 6.5], [5.0, 5.5], [-2.5, -6.0], [3.0, -4.0], [6.0, -1.0]]
+                goal_pose_list = [[-2.5, 9.5]]
                 index = random.randrange(0, len(goal_pose_list))
                 self.goal_x = float(goal_pose_list[index][0])
                 self.goal_y = float(goal_pose_list[index][1])
@@ -213,7 +216,7 @@ class DRLGazebo(Node):
         while not self.reset_simulation_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('reset service not available, waiting again...')
         self.reset_simulation_client.call_async(req)
-        time.sleep(0.6)
+        time.sleep(0.5)
 
     def delete_entity(self):
         req = DeleteEntity.Request()
@@ -221,7 +224,7 @@ class DRLGazebo(Node):
         while not self.delete_entity_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('service not available, waiting again...')
         self.delete_entity_client.call_async(req)
-        time.sleep(0.6)
+        time.sleep(0.5)
 
     def spawn_entity(self):
         goal_pose = Pose()
@@ -234,7 +237,7 @@ class DRLGazebo(Node):
         while not self.spawn_entity_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('service not available, waiting again...')
         self.spawn_entity_client.call_async(req)
-        time.sleep(0.6)
+        time.sleep(0.5)
 
     def get_obstacle_coordinates(self):
         tree = ET.parse(os.getenv('DRLNAV_BASE_PATH') + '/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_drl_world/inner_walls/model.sdf')
@@ -271,3 +274,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

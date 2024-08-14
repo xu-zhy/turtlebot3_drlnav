@@ -183,10 +183,13 @@ class DRLGazebo(Node):
                 # --- Define static goal positions here ---
                 # goal_pose_list = [[0.0, 0.0], [0.0, 6.5], [5.0, 5.5], [-2.5, -6.0], [3.0, -4.0], [6.0, -1.0]]
                 goal_pose_list = [[-2.5, 9.5]]
-                index = random.randrange(0, len(goal_pose_list))
+                index = 0
                 self.goal_x = float(goal_pose_list[index][0])
                 self.goal_y = float(goal_pose_list[index][1])
-            elif self.stage == 8 or self.stage == 9 or self.stage == 12:
+            elif self.stage == 12:
+                # TODO: define goal positions for stage 12
+                ...
+            elif self.stage == 8 or self.stage == 9 :
                 # --- Define static goal positions here ---
                 goal_pose_list = [[2.0, 2.0], [2.0, 1.5], [2.0, -0.5], [2.0, -1.0], [2.0, -2.0], [1.3, 1.0],
                                     [1.0, 0.3], [1.0, -2.0], [0.3, -1.0],  [0.0, 2.0], [0.0, -1.0], [-1.0, 1.0],

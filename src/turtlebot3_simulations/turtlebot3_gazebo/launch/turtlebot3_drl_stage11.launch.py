@@ -20,27 +20,27 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
 TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
 
-
-def generate_launch_description():
+def launch_setup(context, *args, **kwargs):
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     pause = LaunchConfiguration('pause', default='true')
-    world_file_name = 'turtlebot3_drl_stage11/' + TURTLEBOT3_MODEL + '.model'
+    world_file_name = LaunchConfiguration('world_file_name', default='world_0.world').perform(context)
     world = os.path.join(get_package_share_directory('turtlebot3_gazebo'),
-                         'worlds', world_file_name)
+                         'worlds', 'turtlebot3_drl_stage11', world_file_name)
+    print(world)
     launch_file_dir = os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'launch')
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
     file = open('/tmp/drlnav_current_stage.txt', 'w')
     file.write("11\n")
     file.close()
-
-    return LaunchDescription([
+    
+    return [
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')
@@ -58,4 +58,14 @@ def generate_launch_description():
             PythonLaunchDescriptionSource([launch_file_dir, '/robot_state_publisher.launch.py']),
             launch_arguments={'use_sim_time': use_sim_time}.items(),
         ),
+    ]
+
+def generate_launch_description():
+    return LaunchDescription([
+        DeclareLaunchArgument(
+            'world_file_name',
+            default_value='world_0.world',
+            description='Name of the world file to load'
+        ),
+        OpaqueFunction(function=launch_setup),
     ])

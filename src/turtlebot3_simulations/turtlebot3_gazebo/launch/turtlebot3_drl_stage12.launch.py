@@ -30,7 +30,7 @@ TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
 def launch_setup(context, *args, **kwargs):
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     pause = LaunchConfiguration('pause', default='true')
-    world_file_name = LaunchConfiguration('world_file_name', default='apartment.model').perform(context)
+    world_file_name = LaunchConfiguration('world_file_name', default='apartment.world').perform(context)
     world = os.path.join(get_package_share_directory('turtlebot3_gazebo'),
                          'worlds', 'turtlebot3_drl_stage12', world_file_name)
     print(world)
@@ -70,7 +70,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'world_file_name',
-            default_value='apartment.model',
+            default_value='apartment.world',
             description='Name of the world file to load'
         ),
         OpaqueFunction(function=launch_setup),

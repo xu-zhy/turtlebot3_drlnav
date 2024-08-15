@@ -41,12 +41,11 @@ def launch_setup(context, *args, **kwargs):
     file.write("12\n")
     file.close()
     
+    file = open('/tmp/drlnav_current_world.txt', 'w')
+    file.write(world_file_name)
+    file.close()
+    
     return [
-        DeclareLaunchArgument(
-            'world_file_name',
-            default_value='apartment.model',
-            description='Name of the world file to load'
-        ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')

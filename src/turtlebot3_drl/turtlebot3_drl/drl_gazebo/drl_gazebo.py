@@ -187,8 +187,17 @@ class DRLGazebo(Node):
                 self.goal_x = float(goal_pose_list[index][0])
                 self.goal_y = float(goal_pose_list[index][1])
             elif self.stage == 12:
-                # TODO: define goal positions for stage 12
-                ...
+                with open('/tmp/drlnav_current_world.txt', 'r') as f:
+                    self.world = f.read()
+                if self.world_name == 'apartment.model':
+                    goal_pose_list = [[-9.0, -1.6], [-12.7, -3.2], [-8.8, -5.3], [-6.2, -5.0], [-6.1, -0.78], 
+                                      [-11.2, 1.3], [-5.8, -1.8], [-2.5, 1.8], [3.6, 2.0], [0.9, -1.9], [3.5, -3.0]]
+                elif self.world_name == 'wall1.model':
+                    goal_pose_list = [[1.6, 0.1], [5.0, 1.3], [9.0, 0.8], [12.0, 0.7], [9.4, 2.2], [8.4, 3.5], 
+                                      [7.1, 6.0], [2.3, 4.3], [3.4, 1.6]]
+                index = random.randrange(0, len(goal_pose_list))
+                self.goal_x = float(goal_pose_list[index][0])
+                self.goal_y = float(goal_pose_list[index][1])
             elif self.stage == 8 or self.stage == 9 :
                 # --- Define static goal positions here ---
                 goal_pose_list = [[2.0, 2.0], [2.0, 1.5], [2.0, -0.5], [2.0, -1.0], [2.0, -2.0], [1.3, 1.0],

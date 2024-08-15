@@ -18,13 +18,13 @@ GRAPH_AVERAGE_REWARD     = 10       # Average the reward graph over every N epis
 
 # --- SIMULATION ENVIRONMENT SETTINGS ---
 REWARD_FUNCTION = "A"           # Defined in reward.py
-EPISODE_TIMEOUT_SECONDS = 50    # Number of seconds after which episode timeout occurs
+EPISODE_TIMEOUT_SECONDS = 100    # Number of seconds after which episode timeout occurs
 
 TOPIC_SCAN = 'scan'
 TOPIC_VELO = 'cmd_vel'
 TOPIC_ODOM = 'odom'
 
-EPISODE_TIMEOUT_SECONDS     = 50    # Number of seconds after which episode timeout occurs
+EPISODE_TIMEOUT_SECONDS     = 100    # Number of seconds after which episode timeout occurs
 ARENA_LENGTH                = 4.2   # meters
 ARENA_WIDTH                 = 4.2   # meters
 SPEED_LINEAR_MAX            = 0.22  # m/s
@@ -76,7 +76,7 @@ DISCOUNT_FACTOR = 0.99
 LEARNING_RATE   = 0.003
 TAU             = 0.003
 
-OBSERVE_STEPS   = 25000     # At training start random actions are taken for N steps for better exploration
+OBSERVE_STEPS   = 2500     # At training start random actions are taken for N steps for better exploration
 STEP_TIME       = 0.01      # Delay between steps, can be set to 0
 EPSILON_DECAY   = 0.9995    # Epsilon decay per step
 EPSILON_MINIMUM = 0.05

@@ -58,7 +58,7 @@ class DRLGazebo(Node):
         self.prev_x, self.prev_y = -1, -1
         self.goal_x, self.goal_y = 0.5, 0.0
         if self.stage == 11:
-            self.goal_x, self.goal_y = -2.5, 9.5
+            self.goal_x, self.goal_y = -2.5, 10.5
 
         """************************************************************
         ** Initialise ROS publishers, subscribers and clients
@@ -109,6 +109,11 @@ class DRLGazebo(Node):
         else:
             self.generate_goal_pose()
             print(f"success: generate a new goal, goal pose: {self.goal_x:.2f}, {self.goal_y:.2f}")
+            if self.stage == 11:
+                # 写入文件，并正常退出程序
+                with open('/home/lafe/resule.txt', 'w') as f:
+                    f.write('success')
+                exit(0)
         return response
 
     def task_fail_callback(self, request, response):
@@ -123,6 +128,11 @@ class DRLGazebo(Node):
         else:
             self.generate_goal_pose()
             print(f"fail: reset the environment, goal pose: {self.goal_x:.2f}, {self.goal_y:.2f}")
+            if self.stage == 11:
+                # 写入文件，并正常退出程序
+                with open('/home/lafe/resule.txt', 'w') as f:
+                    f.write('fail')
+                exit(0)
         return response
 
     def goal_is_valid(self, goal_x, goal_y):
@@ -182,7 +192,7 @@ class DRLGazebo(Node):
             if self.stage == 11:
                 # --- Define static goal positions here ---
                 # goal_pose_list = [[0.0, 0.0], [0.0, 6.5], [5.0, 5.5], [-2.5, -6.0], [3.0, -4.0], [6.0, -1.0]]
-                goal_pose_list = [[-2.5, 9.5]]
+                goal_pose_list = [[-2.5, 10.5]]
                 index = 0
                 self.goal_x = float(goal_pose_list[index][0])
                 self.goal_y = float(goal_pose_list[index][1])
